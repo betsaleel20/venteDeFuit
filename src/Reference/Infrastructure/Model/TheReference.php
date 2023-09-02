@@ -50,7 +50,7 @@ class TheReference extends Model
             referenceId: new Id($this->id)
         );
         $domainReference->changeCreatedAt(new DateVo($this->created_at));
-        $domainReference->changeDeletedAt(new DateVo($this->deleted_at));
+        $domainReference->changeUpdatedAt(new DateVo($this->deleted_at));
         return $domainReference ;
     }
 }

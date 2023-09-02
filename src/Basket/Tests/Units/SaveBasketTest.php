@@ -19,7 +19,7 @@ use Shop\Fruit\Tests\Units\InMemoryFruitRepository;
 use Shop\Reference\Domain\Exceptions\NotFoundReferenceException;
 use Shop\Reference\Domain\Repository\ReferenceRepository;
 use Shop\Reference\Domain\TheReference;
-use Shop\Reference\Services\GetReferenceByIdService;
+use Shop\Reference\Services\PdoGetReferenceByIdService;
 use Shop\Reference\Tests\Unit\InMemoryReferenceRepository;
 use Shop\shared\PriceVo;
 use Shop\shared\StringVo;
@@ -205,7 +205,7 @@ class SaveBasketTest extends TestCase
     {
         return new SaveBasketHandler(
             $this->repository,
-            new GetReferenceByIdService($this->referenceRepository),
+            new PdoGetReferenceByIdService($this->referenceRepository),
             new CheckFruitInStockAvailabilityService(
                 $this->fruitRepository,
             )

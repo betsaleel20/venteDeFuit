@@ -14,7 +14,7 @@ use Shop\Fruit\Tests\Units\Services\InMemoryGetFruitByIdOrThrowNotFoundFruitExce
 use Shop\Reference\Domain\Exceptions\NotFoundReferenceException;
 use Shop\Reference\Domain\TheReference;
 use Shop\Reference\Domain\Repository\ReferenceRepository;
-use Shop\Reference\Services\GetReferenceByIdService;
+use Shop\Reference\Services\PdoGetReferenceByIdService;
 use Shop\Reference\Tests\Unit\InMemoryReferenceRepository;
 use Shop\shared\Exceptions\InvalidCommandException;
 use Shop\shared\PriceVo;
@@ -155,7 +155,7 @@ class SaveFruitTest extends TestCase
     {
         return new SaveFruitHandler(
             $this->repository,
-            new GetReferenceByIdService($this->referenceRepository),
+            new PdoGetReferenceByIdService($this->referenceRepository),
             $this->inMemoryGetFruitByIdOrThrowNotFoundFruitExceptionService,
         );
     }

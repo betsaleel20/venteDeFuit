@@ -6,16 +6,16 @@ use Shop\Fruit\Domain\Fruit;
 use Shop\Fruit\Domain\FruitRepository;
 use Shop\Fruit\Domain\Service\GetFruitByIdService;
 use Shop\Fruit\Services\EloquentGetFruitByIdService;
-use Shop\Reference\Services\GetReferenceByIdService;
+use Shop\Reference\Services\PdoGetReferenceByIdService;
 use Shop\shared\Id;
 use Shop\shared\StringVo;
 
 class SaveFruitHandler
 {
     public function __construct(
-        private FruitRepository             $respository,
-        private GetReferenceByIdService     $getReferenceByIdServiceOrThrowNotFoundReferenceException,
-        private GetFruitByIdService         $getFruitByIdOrthrowNotFoundFruitExceptionService,
+        private FruitRepository            $respository,
+        private PdoGetReferenceByIdService $getReferenceByIdServiceOrThrowNotFoundReferenceException,
+        private GetFruitByIdService        $getFruitByIdOrthrowNotFoundFruitExceptionService,
     )
     {
     }

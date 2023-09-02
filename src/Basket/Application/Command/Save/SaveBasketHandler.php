@@ -8,7 +8,7 @@ use Shop\Basket\Domain\Repository\BasketRepository;
 use Shop\Basket\Domain\ValuesObject\BasketElement;
 use Shop\Basket\Domain\ValuesObject\Quantity;
 use Shop\Fruit\Services\CheckFruitInStockAvailabilityService;
-use Shop\Reference\Services\GetReferenceByIdService;
+use Shop\Reference\Services\PdoGetReferenceByIdService;
 use Shop\shared\Id;
 
 readonly class SaveBasketHandler
@@ -17,7 +17,7 @@ readonly class SaveBasketHandler
 
     public function __construct(
         private BasketRepository                     $repository,
-        private GetReferenceByIdService $getReferenceByIdServiceOrThrowNotFoundException,
+        private PdoGetReferenceByIdService           $getReferenceByIdServiceOrThrowNotFoundException,
         private CheckFruitInStockAvailabilityService $checkFruitInStockAvailabilityOrThrowUnavailableFruitQuantityException
     )
     {

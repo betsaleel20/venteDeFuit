@@ -24,7 +24,6 @@ class SaveReferenceTest extends TestCase
         parent::setUp();
         $this->repository = new InMemoryReferenceRepository();
         $this->getReferenceByIdService = new InMemoryGetReferenceByIdOrThrowNotFoundReferenceExceptionService();
-
     }
 
     public function test_can_create_reference()
@@ -46,10 +45,9 @@ class SaveReferenceTest extends TestCase
     public function test_can_throw_invalid_argument_exception()
     {
         $this->expectException(InvalidCommandException::class);
-        $command = new SaveReferenceCommand(
-            label: '',
+        new SaveReferenceCommand(
+            label: ' ',
             price:0,
-            referenceId: 'someInvalidValue'
         );
     }
 
@@ -83,10 +81,13 @@ class SaveReferenceTest extends TestCase
         //When
         $handler = $this->createSaveReferenceHandler();
         $response = $handler->handle($command);
+        $updatedReference = $this->repository->references[$command->referenceId];
 
         //Then
         $this->assertTrue($response->isSaved);
         $this->assertEquals($command->referenceId, $response->referenceId);
+        $this->assertEquals($command->label, $updatedReference->referenceName()->value());
+        $this->assertEquals($command->price, $updatedReference->referencePrice()->value());
     }
 
     private function buildReferenceSUT():TheReference
@@ -95,6 +96,7 @@ class SaveReferenceTest extends TestCase
             referenceName: new StringVo('RefLabel'),
             referencePrice:new PriceVo(1500.50)
         );
+        $this->repository->save($reference);
         $this->getReferenceByIdService->references[$reference->id()->value()] = $reference;
         return $reference;
     }

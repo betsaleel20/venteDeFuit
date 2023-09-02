@@ -14,10 +14,10 @@ class InMemoryGetReferenceByIdOrThrowNotFoundReferenceExceptionService implement
      * @var TheReference[]
      */
     public array $references = [];
-    public function execute(Id $referenceId): TheReference
+    public function execute(string $referenceId): TheReference
     {
-        if(array_key_exists($referenceId->value(), $this->references)) {
-            return $this->references[$referenceId->value()];
+        if(array_key_exists($referenceId, $this->references)) {
+            return $this->references[$referenceId];
         }
         throw new NotFoundReferenceException('Cette reference n\'existe pas');
     }
