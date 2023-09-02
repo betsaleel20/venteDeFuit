@@ -8,9 +8,9 @@ use Shop\shared\Id;
 interface GetReferenceByIdService
 {
     /**
-     * @param Id $referenceId
+     * @param string $referenceId
      * @return TheReference
      */
-    public function execute(Id $referenceId): TheReference;
+    public function execute(string $referenceId): TheReference;
 
 }

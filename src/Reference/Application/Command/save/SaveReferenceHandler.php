@@ -29,16 +29,16 @@ readonly class SaveReferenceHandler
         $response = new SaveReferenceResponse();
 
         $referenceId = $command->referenceId ? new Id($command->referenceId) : null;
-        $reference = is_null($referenceId) ?
+        $foundReference = is_null($referenceId) ?
             null :
-            $this->getReferenceByIdOrThrowNotFoundReferenceException->execute($referenceId);
+            $this->getReferenceByIdOrThrowNotFoundReferenceException->execute($referenceId->value());
         $label = new StringVo($command->label);
         $price = new PriceVo($command->price);
 
         $reference = TheReference::create(
             referenceName: $label,
             referencePrice: $price,
-            referenceId: $reference?->id()
+            referenceId: $foundReference?->id()
         );
         $this->repository->save($reference);
 

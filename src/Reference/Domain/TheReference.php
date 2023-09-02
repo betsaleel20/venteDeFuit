@@ -10,53 +10,93 @@ use Shop\shared\StringVo;
 class TheReference
 {
     private ?DateVo $createdAt;
-    private ?DateVo $deletedAt;
-    private function __construct(
+    private ?DateVo $updatedAt;
+
+    public function __construct(
         private Id       $id,
         private StringVo $referenceName,
-        private PriceVo $referencePrice
+        private PriceVo  $referencePrice
     )
     {
         $this->createdAt = null;
-        $this->deletedAt = null;
+        $this->updatedAt = null;
     }
 
     public static function create(
         StringVo $referenceName,
         PriceVo  $referencePrice,
-        ?Id      $referenceId = null
+        ?Id      $referenceId = null,
     ): self
     {
         $referenceId = is_null($referenceId) ? new Id() : $referenceId;
-        return new self(id: $referenceId, referenceName: $referenceName, referencePrice: $referencePrice);
+        $self = new self(id: $referenceId, referenceName: $referenceName, referencePrice: $referencePrice);
+        $referenceId ? $self->changeUpdatedAt(new DateVo()) : $self->createdAt = new DateVo();
+        return $self;
     }
 
+    /**
+     * @return Id
+     */
     public function id(): Id
     {
         return $this->id;
     }
 
+    /**
+     * @return StringVo
+     */
     public function referenceName(): StringVo
     {
         return $this->referenceName;
     }
 
+    /**
+     * @return PriceVo
+     */
     public function referencePrice(): PriceVo
     {
         return $this->referencePrice;
     }
 
-    public function changeCreatedAt(DateVo $createdAt):void
+    /**
+     * @return DateVo
+     */
+    public function createdAt(): DateVo
     {
-        $this->createdAt = $createdAt;
+        return $this->createdAt;
     }
 
-    public function changeDeletedAt(DateVo $deletedAt):void
+    /**
+     * @param DateVo $deletedAt
+     * @return void
+     */
+    public function changeUpdatedAt(DateVo $deletedAt): void
     {
-        $this->deletedAt = $deletedAt;
+        $this->updatedAt = $deletedAt;
     }
 
-    public function toArray():array
+    /**
+     * @param StringVo $referenceName
+     * @return void
+     */
+    public function changeReferenceName(StringVo $referenceName):void
+    {
+        $this->referenceName = $referenceName;
+    }
+
+    /**
+     * @param PriceVo $referencePrice
+     * @return void
+     */
+    public function changeReferencePrice(PriceVo $referencePrice): void
+    {
+        $this->referencePrice = $referencePrice;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
     {
         return [
             'id' => $this->id->value(),
@@ -64,5 +104,6 @@ class TheReference
             'the_reference_price' => $this->referencePrice->value()
         ];
     }
+
 
 }

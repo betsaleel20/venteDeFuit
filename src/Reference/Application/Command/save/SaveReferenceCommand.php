@@ -6,23 +6,25 @@ use Shop\shared\Exceptions\InvalidCommandException;
 
 class SaveReferenceCommand
 {
+
+    public ?string $referenceId ;
     /**
      * @param string $label
      * @param float $price
-     * @param string|null $referenceId
      */
     public function __construct(
         public string  $label,
         public float   $price,
-        public ?string $referenceId = null)
+    )
     {
+        $this->referenceId = null;
         $this->validate();
     }
 
     private function validate():void
     {
         if(
-            empty($this->label) ||
+            empty(trim($this->label)) ||
             $this->price <=0
         ){
                 throw new InvalidCommandException('Les informations que vous venez d\'entrer sont invalides');

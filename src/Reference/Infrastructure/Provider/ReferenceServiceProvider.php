@@ -5,7 +5,9 @@ namespace Shop\Reference\Infrastructure\Provider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Shop\Reference\Domain\Repository\ReferenceRepository;
+use Shop\Reference\Domain\Service\GetReferenceByIdService;
 use Shop\Reference\Infrastructure\Repository\EloquentReferenceRepository;
+use Shop\Reference\Services\PdoGetReferenceByIdService;
 
 class ReferenceServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,7 @@ class ReferenceServiceProvider extends ServiceProvider
     private function bindModuleRepositories(): void
     {
         $this->app->singleton(ReferenceRepository::class, EloquentReferenceRepository::class);
+        $this->app->singleton(GetReferenceByIdService::class, PdoGetReferenceByIdService::class);
     }
 
     public function registerRoute():void

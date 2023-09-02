@@ -14,6 +14,7 @@ class EloquentReferenceRepository implements ReferenceRepository
     public function save(DomainReference $reference): void
     {
         try {
+
             $eReference = TheReference::whereId($reference->id()->value())->first();
 
             $eReference ? $eReference->fill($reference->toArray())->save() :
